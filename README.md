@@ -1,6 +1,12 @@
 # Eyes of Art
 
+https://youtu.be/fsqjK1riPuA
+
+(buy me a coffee, if you'd like to! https://buymeacoffee.com/jugoretz)
+
 An ESP32-S3 artwork display by **Joseph Ugoretz and Beth Harris**. A round TFT plays animated eyes from artworks while a small OLED shows the artist, title, and date. A button advances to the next artwork; automatic advance runs every **five minutes** on an independent schedule.
+
+The project is assembled in a shadowbox, with wiring and processor exposed and visible.  It adds to the "Mad Scientist" vibe.
 
 ## Hardware and wiring
 
