@@ -3,7 +3,7 @@
 
   Authors:
     Joseph Ugoretz
-    Beth Harris
+    (inspired by Beth Harris)
 
   Project:
     Eyes of Art

@@ -1,6 +1,6 @@
 # Credits and third-party notices
 
-Eyes of Art project authors: Joseph Ugoretz and Beth Harris, as credited in the sketch.
+Eyes of Art project authors: Joseph Ugoretz (inspired by Beth Harris), as credited in the sketch.
 
 ## External software
 
@@ -20,7 +20,7 @@ No existing license or copyright notices were removed during cleanup. The reposi
 
 The artist/title/date labels in `playlist.txt`, `playlist.h`, `artwork-catalog.tsv`, and `Eye_Playlist_Catalog.pdf` identify artworks. They are not a record of source-image permissions.
 
-The repository includes 37 GIFs in `eye_GIFs_ready_for_SD_card/`. Joseph Ugoretz reports that all source artworks are public domain and that the project authors created the GIF animations with their landmark and animation scripts. This records the author's account; source-image URLs and institutional credit lines have not yet been supplied.
+The repository includes 37 GIFs in `eye_GIFs_ready_for_SD_card/`. 
 
 The checkout contains the shared settings in `eye_config.py`, the landmark-preview tool `find_eye_landmarks_shared_config.py`, and the GIF generator `make_eye_animation_shared_config.py`.
 
