@@ -1,3 +1,5 @@
+<img width="1024" height="768" alt="001 2026-07-13 12 30 40" src="https://github.com/user-attachments/assets/f6402e24-87a8-4fb8-baac-bcdc2a7972d2" />
+
 # Eyes of Art
 
 https://youtu.be/fsqjK1riPuA
