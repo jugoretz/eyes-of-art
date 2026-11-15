@@ -6,20 +6,24 @@ https://youtu.be/fsqjK1riPuA
 
 (buy me a coffee, if you'd like to! https://buymeacoffee.com/jugoretz)
 
-An ESP32-S3 artwork display by **Joseph Ugoretz and Beth Harris**. A round TFT plays animated eyes from artworks while a small OLED shows the artist, title, and date. A button advances to the next artwork; automatic advance runs every **five minutes** on an independent schedule.
+An ESP32-S3 artwork display by **Joseph Ugoretz** (inspired by Beth Harris). A round TFT plays animated eyes from artworks while a small OLED shows the artist, title, and date. A button advances to the next artwork; automatic advance runs every **five minutes** on an independent schedule.
 
 The project is assembled in a shadowbox, with wiring and processor exposed and visible.  It adds to the "Mad Scientist" vibe.
 
+## Full list of Artworks
+
+For this project, we used 36 works of art.  Artists, titles, and dates are recorded in the file "Eye_Playlist_Catalog.pdf" above.
+
 ## Hardware and wiring
 
-The build uses an **ESP32-S3 N16R8** (16 MB flash, 8 MB PSRAM), **1.28-inch GC9A01 TFT displays**, and a **0.96-inch SSD1306 I²C OLED (128 × 64 pixels)**. The supplied sketch drives one 240 × 240 round TFT and one OLED. It also uses a microSD SPI module, a normally open button, and one onboard RGB NeoPixel. The exact development-board manufacturer, module power wiring, and tested software versions have not yet been recorded.
+The build uses an **ESP32-S3 N16R8** (16 MB flash, 8 MB PSRAM), **1.28-inch GC9A01 TFT displays**, and a **0.96-inch SSD1306 I²C OLED (128 × 64 pixels)**. The supplied sketch drives three 240 × 240 round TFTs and one OLED. It also uses a microSD SPI module, a normally open button, and one onboard RGB NeoPixel. 
 
 | Connection | ESP32-S3 GPIO | Notes |
 | --- | --- | --- |
 | TFT SCLK / SD SCK | 8 | Shared SPI clock |
 | TFT MOSI (sometimes SDA) / SD MOSI | 9 | Shared SPI data |
 | SD MISO | 7 | SD return data |
-| TFT CS | 39 | Controlled manually by the sketch |
+| TFT CS | 39 | Controlled manually by the sketch (all displays are identical) |
 | TFT DC | 2 | From supplied TFT setup |
 | TFT reset | 4 | From supplied TFT setup |
 | SD CS | 21 | Separate from TFT CS |
@@ -28,7 +32,7 @@ The build uses an **ESP32-S3 N16R8** (16 MB flash, 8 MB PSRAM), **1.28-inch GC9A
 | Advance button | 6 | Button between GPIO and GND; internal pull-up |
 | Onboard RGB LED | 48 | Board-dependent; GRB NeoPixel |
 
-All modules need a common ground. Use 3.3 V-compatible logic and consult each module's power specifications. The original TFT is described as having no separate backlight pin. Do not use GPIO 7, 8, or 9 for the OLED.
+All modules need a common ground. Use 3.3 V-compatible logic and consult each module's power specifications. The original TFT has no separate backlight pin. Do not use GPIO 7, 8, or 9 for the OLED.
 
 ## Arduino setup
 
@@ -45,7 +49,7 @@ All modules need a common ground. Use 3.3 V-compatible logic and consult each mo
    #include <User_Setups/three_eyes_sdcard_esp32s3_GC9A01.h>
    ```
 
-   The supplied setup selects GC9A01 at 240 × 240, RGB color order, inversion on, and a **60 MHz TFT SPI clock**. It leaves TFT MISO undefined and `TFT_CS` at `-1`; the sketch controls GPIO 39 itself and configures SD MISO as GPIO 7. Preserve those settings for the shared SPI wiring. The setup's original compatibility note requires ESP32 core **2.0.14**; newer core versions have not been validated in this cleanup. Exact TFT_eSPI and other library versions still need recording. Defining these settings only in the sketch does not configure the separately compiled library. Library updates may overwrite configuration.
+   The supplied setup selects GC9A01 at 240 × 240, RGB color order, inversion on, and a **60 MHz TFT SPI clock**. It leaves TFT MISO undefined and `TFT_CS` at `-1`; the sketch controls GPIO 39 itself and configures SD MISO as GPIO 7. Preserve those settings for the shared SPI wiring. The setup's original compatibility note requires ESP32 core **2.0.14**; newer core versions have not been validated in this cleanup. Defining these settings only in the sketch does not configure the separately compiled library. Library updates may overwrite configuration.
 4. Arduino requires the sketch folder to match its primary `.ino` filename. For this repository's `eyes-of-art` folder, copy `eyes_of_art.ino` into a separate folder named `eyes_of_art` and open that copy. Do not include legacy `playlist.h` in the sketch.
 5. Prepare the SD card as below, insert it, upload, and open Serial Monitor at **115200 baud**.
 
