@@ -1,3 +1,5 @@
+// Legacy compiled-in playlist; retained for reference only.
+// The current sketch does not include this file. Use playlist.txt on the SD card.
 #pragma once
 struct Artwork {
   const char *filename;

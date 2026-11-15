@@ -1,0 +1,3 @@
+# Optional landmark-preview tool only; tested versions not recorded.
+Pillow
+numpy

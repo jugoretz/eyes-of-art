@@ -45,7 +45,8 @@
 // TFT chip select.
 
 // Other TFT SPI pins are configured in TFT_eSPI's User_Setup file.
-//we're using <User_Setups/three_eyes_sdcard_esp32s3_GC9A01.h>
+// Supplied setup: three_eyes_sdcard_esp32s3_GC9A01.h
+// See README.md for installation into TFT_eSPI/User_Setups/.
 //which has:
 //#define TFT_RST 4	// Reset
 //#define TFT_CS   -1 // Chip Select (-1 because we're defining it below)
@@ -713,32 +714,28 @@ void setup() {
 
   SPI.begin(SD_SCLK, SD_MISO, SD_MOSI, SD_CS);
 
-printSDDebug();
+  printSDDebug();
 
-if (SD.cardType() == CARD_NONE) {
-  Serial.println("Stopping because no SD card mounted.");
-  while (true) delay(1000);
-}
+  if (SD.cardType() == CARD_NONE) {
+    Serial.println("Stopping because no SD card mounted.");
+    while (true) delay(1000);
+  }
 
   Wire.begin(OLED_SDA, OLED_SCL);
   u8g2.begin();
   u8g2.setContrast(255);
 
-// Start the onboard RGB NeoPixel.
-strip.begin();
-
-// Global brightness limit for that onboard Neopixel.
-strip.setBrightness(MASTER_BRIGHTNESS);
-
-// Set that single onboard pixel to desired color.
-strip.setPixelColor(0, strip.Color(85, 10, 255)); //purple
-strip.show();
+  // The onboard pixel stays purple while the project is running.
+  strip.begin();
+  strip.setBrightness(MASTER_BRIGHTNESS);
+  strip.setPixelColor(0, strip.Color(85, 10, 255));
+  strip.show();
 
   if (!loadPlaylist()) {
     Serial.println("No playlist items loaded.");
     while (true) delay(1000);
   }
-  
+
   selectDisplay();
   tft.init();
   tft.setRotation(0);
@@ -751,14 +748,13 @@ strip.show();
   prepareCurrentArtworkLabel();
 
   if (!openCurrentGIF()) {
-  while (true) delay(1000);
-}
+    while (true) delay(1000);
+  }
 
-Serial.println("GIF opened.");
+  Serial.println("GIF opened.");
 
-// Start the independent 24-hour timer from successful startup.
-// Manual button presses will not reset this timer.
-lastAutoAdvanceTime = millis();
+  // Manual button presses do not reset the automatic-advance schedule.
+  lastAutoAdvanceTime = millis();
 
   Serial.println("GIF opened.");
 }
@@ -771,7 +767,7 @@ void checkAutomaticAdvance() {
     // This keeps the timer anchored to the original startup schedule.
     lastAutoAdvanceTime += AUTO_ADVANCE_INTERVAL_MS;
 
-    Serial.println("24-hour timer: advancing artwork.");
+    Serial.println("Automatic timer: advancing artwork.");
     advanceArtwork();
   }
 }
@@ -781,12 +777,12 @@ void checkAutomaticAdvance() {
 // ============================================================================
 
 void loop() {
-  //manual advance with the button.  this does not affect the timer.
+  // Manual advance does not reset the automatic timer.
   if (buttonPressedEvent()) {
     advanceArtwork();
   }
 
-// Independent scheduled advance based only on time since startup. not affected by the button
+  // Keep the automatic schedule anchored to startup.
   checkAutomaticAdvance();
   updateLabelAnimation();
 
@@ -794,7 +790,7 @@ void loop() {
   int result = gif.playFrame(false, &delayMs);
 
   if (result == 1) {
-   if (delayMs > MAX_GIF_DELAY_MS) delayMs = MAX_GIF_DELAY_MS;
+    if (delayMs > MAX_GIF_DELAY_MS) delayMs = MAX_GIF_DELAY_MS;
     if (delayMs < MIN_GIF_DELAY_MS) delayMs = MIN_GIF_DELAY_MS;
 
     waitWithOLED(delayMs);
